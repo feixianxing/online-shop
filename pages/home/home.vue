@@ -1,5 +1,9 @@
 <template>
   <view>
+    <!-- 使用自定义的搜索组件 -->
+    <view class="search-box">
+      <my-search @click="gotoSearch"></my-search>
+    </view>
     <!-- 轮播图区域 -->
     <swiper :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000" :circular="true">
       <!-- 循环渲染轮播图的 item 项 -->
@@ -54,7 +58,9 @@
 </template>
 
 <script>
+  import MySearch from '../../components/my-search/my-search.vue'
   export default {
+    components:{MySearch},
     data() {
       return {
         //  轮播图的数据列表，默认为空数组
@@ -113,6 +119,12 @@
         })
         
         this.floorList = res.message
+      },
+      // 跳转到分页中的搜索页面
+      gotoSearch(){
+        uni.navigateTo({
+          url:'/subpkg/search/search'
+        })
       }
     }
   }
@@ -156,5 +168,13 @@ swiper{
 .floor-img-box{
   display: flex;
   padding-left: 10rpx;
+}
+
+// 顶部搜索输入框的吸顶效果
+.search-box{
+  position: sticky;
+  top: 0;
+  // 提高层级，防止被轮播图覆盖
+  z-index: 999;
 }
 </style>

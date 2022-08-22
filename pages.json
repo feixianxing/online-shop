@@ -3,27 +3,27 @@
     {
       "path": "pages/home/home",
       "style": {
-        "navigationBarTitleText": "",
+        "navigationBarTitleText": "黑马优购",
         "enablePullDownRefresh": false
       }
     }, {
       "path": "pages/cate/cate",
       "style": {
-        "navigationBarTitleText": "",
+        "navigationBarTitleText": "黑马优购",
         "enablePullDownRefresh": false
       }
 
     }, {
       "path": "pages/cart/cart",
       "style": {
-        "navigationBarTitleText": "",
+        "navigationBarTitleText": "黑马优购",
         "enablePullDownRefresh": false
       }
 
     }, {
       "path": "pages/my/my",
       "style": {
-        "navigationBarTitleText": "",
+        "navigationBarTitleText": "黑马优购",
         "enablePullDownRefresh": false
       }
 
@@ -34,6 +34,15 @@
       "root": "subpkg",
       "pages": [{
                     "path" : "goods_list/goods_list",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "黑马优购",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+                ,{
+                    "path" : "search/search",
                     "style" :                                                                                    
                 {
                     "navigationBarTitleText": "",
