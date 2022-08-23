@@ -103,7 +103,7 @@
         // 清空 data 中保存的搜索历史
         this.historyList = []
         // 清空本地存储中记录的搜索历史
-        uni.setStorage('kw','[]')
+        uni.setStorageSync('kw','[]')
       },
       // 点击跳转到商品列表页面
       gotoGoodsList(kw){

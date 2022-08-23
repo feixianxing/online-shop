@@ -23,9 +23,20 @@ export default{
         // 如果购物车中有这件商品，则只更新数量即可
         findResult.goods_count++
       }
+    },
+    saveToStorage(state){
+      uni.setStorageSync('cart', JSON.stringify(state.cart))
     }
   },
   
   // 模块的getters 方法
-  getters: {},
+  getters: {
+    // 统计购物车中商品的总数量
+    total(state){
+      let count = 0;
+      // 循环统计商品的数量，累加到变量 count 中
+      state.cart.forEach(goods => count += goods.goods_count)
+      return count
+    }
+  },
 }
