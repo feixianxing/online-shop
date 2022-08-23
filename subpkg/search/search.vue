@@ -95,7 +95,7 @@
       gotoDetail(goods_id){
         uni.navigateTo({
           // 指定详情页面的 URL 地址，并传递 goods_id 参数
-          url:'/subpkg/goods_detail/goods_details?goods_id=' + goods_id
+          url:'/subpkg/goods_detail/goods_detail?goods_id=' + goods_id
         })
       },
       // 清空搜索历史记录
