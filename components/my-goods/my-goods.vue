@@ -2,6 +2,7 @@
   <view class="goods-item">
     <!-- 商品左侧图片区域 -->
     <view class="goods-item-left">
+      <radio :checked="goods.goods_state" color="#C00000" v-if="showRadio" @click="radioClickHandler"></radio>
       <image :src="goods.goods_small_logo || defaultPic" class="goods-pic"></image>
     </view>
     <!-- 商品右侧信息区域 -->
@@ -11,13 +12,17 @@
       <view class="goods-info-box">
         <!-- 商品价格 -->
         <view class="goods-price">￥{{goods.goods_price | tofixed}}</view>
+        <!-- 商品数量 -->
+        <uni-number-box :min="1" :value="goods.goods_count" @change="numChangeHandler" v-if="showNum"></uni-number-box>
       </view>
     </view>
   </view>
 </template>
 
 <script>
+  import UniNumberBox from '@/components/uni-number-box/uni-number-box'
   export default {
+    components:{UniNumberBox},
     name:"my-goods",
     // 定义 props 属性，用来接收外界传递到当前组件的数据
     props:{
@@ -25,6 +30,17 @@
       goods:{
         type: Object,
         default: {},
+      },
+      // 是否展示图片左侧的radio
+      showRadio:{
+        type: Boolean,
+        // 如果外界没有指定 show-radio 属性的值,则默认不显示 radio 组件
+        default: false,
+      },
+      // 是否展示价格右侧的 NumberBox 组件
+      showNum: {
+        type: Boolean,
+        default: false,
       }
     },
     data() {
@@ -38,18 +54,43 @@
       tofixed(num){
         return Number(num).toFixed(2)
       }
+    },
+    methods:{
+      radioClickHandler(){
+        this.$emit('radio-change',{
+          goods_id: this.goods.goods_id,
+          goods_state: !this.goods.goods_state
+        })
+      },
+      // NumberBox 组件的 change 事件处理函数
+      numChangeHandler(val){
+        // 通过 this.$emit() 触发外界通过 @ 绑定的 num-change 事件
+        this.$emit('num-change',{
+          // 商品的 Id
+          goods_id: this.goods.goods_id,
+          // 商品的最新数量  '+'运算符 将 String 转换为 Number
+          goods_count: +val 
+        })
+      },
     }
   }
 </script>
 
 <style lang="scss">
 .goods-item{
+  // 让 goods-item 项占满整个屏幕的宽度
+  width: 750rpx;
+  // 设置盒模型为 border-box
+  box-sizing: border-box;
   display: flex;
   padding: 10px 5px;
   border-bottom: 1px solid #f0f0f0;
   
   .goods-item-left{
     margin-right: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     
     .goods-pic{
       width: 100px;
@@ -65,6 +106,12 @@
     
     .goods-name{
       font-size: 13px;
+    }
+    
+    .goods-info-box{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
     
     .goods-price{

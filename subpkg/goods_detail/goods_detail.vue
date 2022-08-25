@@ -41,10 +41,8 @@
 <script>
   import UniIcons from '@/components/uni-icons/uni-icons.vue'
   import UniGoodsNav from '@/components/uni-goods-nav/uni-goods-nav.vue'
-  // 从 vuex 中按需导出 mapState 辅助方法
-  import { mapState } from 'vuex'
-  // 按需导入 mapGetters 这个辅助方法
-  import { mapGetters } from 'vuex'
+  // 按需导入
+  import { mapState, mapGetters, mapMutations } from 'vuex'
   
   export default { 
     components: {UniIcons,UniGoodsNav},
@@ -90,6 +88,7 @@
       this.getGoodsDetail(goods_id)
     },
     methods: {
+      ...mapMutations('m_cart',['addToCart']),
       // 定义请求商品详情数据的方法
       async getGoodsDetail(goods_id) {
         const {
@@ -128,7 +127,7 @@
       // 右侧按钮的点击事件处理函数
       buttonClick(e){
         // 判断是否点击了 加入购物车 按钮
-        if(e.target.text === '加入购物车'){
+        if(e.content.text === '加入购物车'){
           // 组织一个商品的信息对象
           const goods = {
             goods_id : this.goods_info.goods_id,                  // 商品的Id
@@ -146,13 +145,18 @@
     },
     watch: {
       // 监听 total 值的变化，通过第一个形参得到变化后的新值
-      total(newVal){
-        // 通过数组的 find() 方法，找到购物车按钮的配置对象
-        const findResult = this.options.find((x) => x.text === '购物车')
-        if(findResult){
-          // 动态为购物车按钮的 info 属性赋值
-          findResult.info = newVal
-        }
+      total:{
+        // handler 属性用来定义侦听器的 function 处理函数
+        handler(newVal){
+          // 通过数组的 find() 方法，找到购物车按钮的配置对象
+          const findResult = this.options.find((x) => x.text === '购物车')
+          if(findResult){
+            // 动态为购物车按钮的 info 属性赋值
+            findResult.info = newVal
+          }
+        },
+        // immediate 属性用来声明此侦听器，是否在页面初次加载完毕后立即调用
+        immediate: true
       }
     }
   }
