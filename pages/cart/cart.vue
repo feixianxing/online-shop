@@ -1,5 +1,6 @@
 <template>
   <view class="cart-container" v-if="cart.length !== 0">
+    <my-address></my-address>
     <!-- 购物车商品列表的标题区域 -->
     <view class="cart-title">
       <!-- 左侧的图标 -->
@@ -39,8 +40,9 @@
   import UniSwipeAction from '@/components/uni-swipe-action/uni-swipe-action'
   import UniSwipeActionItem from '@/components/uni-swipe-action-item/uni-swipe-action-item'
   import MySettle from '@/components/my-settle/my-settle'
+  import MyAddress from '@/components/my-address/my-address'
   export default {
-    components:{UniSwipeAction, UniSwipeActionItem,MySettle},
+    components:{UniSwipeAction, UniSwipeActionItem,MySettle,MyAddress},
     mixins: [badgeMix],
     computed:{
       // 将 m_cart 模块中的 cart 数组映射到当前页面中使用
